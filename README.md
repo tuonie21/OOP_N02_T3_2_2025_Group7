@@ -1,1 +1,2 @@
-# RemoteLibrary_TranQuangTruong
+#QuanLyBanHang
+#TranQuangTruong-24100073
