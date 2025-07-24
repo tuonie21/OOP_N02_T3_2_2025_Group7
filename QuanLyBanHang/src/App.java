@@ -1,146 +1,147 @@
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class App {
-   // Main chạy chương trình
-   public static void main(String[] args) 
-   {
-      // Test code
-      /*
-      Scanner input = new Scanner(System.in);
+    public static void main(String[] args) {
+        ArrayList<HangHoa> danhSachHangHoa = new ArrayList<>();
+        ArrayList<Ban> danhSachBan = new ArrayList<>();
+        Scanner input = new Scanner(System.in);
 
-      breakAndContinue.test();
+        while (true) {
+            System.out.println("\n=== QUẢN LÝ BÁN HÀNG ===");
+            System.out.println("1. Nhập hàng hóa");
+            System.out.println("2. Bán hàng hóa");
+            System.out.println("3. Xem danh sách hàng hóa");
+            System.out.println("4. Tìm kiếm hàng hóa");
+            System.out.println("5. Tính doanh thu");
+            System.out.println("6. Thoát");
+            System.out.print("Chọn tùy chọn (1-6): ");
 
-      number n = new number();
-      passObject.f(n);
-      System.out.println(n.i);
+            int choice = input.nextInt();
+            input.nextLine();  // Đọc bỏ newline
 
-      int a;
-      a = randNum.RandNum();
-      System.out.println("random number " + a);
+            if (choice == 1) {
+                // Nhập hàng hóa mới
+                System.out.print("Nhập ID hàng hóa: ");
+                String id = input.nextLine();
+                System.out.print("Nhập tên hàng hóa: ");
+                String ten = input.nextLine();
+                System.out.print("Nhập số lượng nhập: ");
+                int soLuong = input.nextInt();
+                System.out.print("Nhập giá nhập: ");
+                double giaNhap = input.nextDouble();
+                input.nextLine(); // Đọc bỏ newline
+                System.out.print("Nhập ngày nhập (dd/MM/yyyy): ");
+                String ngayNhap = input.nextLine();
+                System.out.print("Nhập loại hàng hóa: ");
+                String loai = input.nextLine();
 
-      int b = input.nextInt();
-      if (shortCircuit.test1(b) == true) System.out.println("be hon 10");
-      else if (shortCircuit.test2(b) == true) System.out.println("be hon 20");
-      else if (shortCircuit.test3(b) == true) System.out.println("be hon 30");
-      input.close();
+                Nhap nhap = new Nhap(id, ten, soLuong, giaNhap, ngayNhap, loai);
+                danhSachHangHoa.add(nhap);
 
-      switchCake.test();
-      
-      hangHoa myObj = new hangHoa(1, "banh mi", "long dep zai", 2025, "do an");
-      System.out.println("hang hoa id: " + myObj.hang_hoa_ID);
-      System.out.println("ten hang hoa: " + myObj.ten_hang_hoa);
-      System.out.println("nha san xuat: " + myObj.nha_sx);
-      System.out.println("loai hang hoa: " + myObj.loai_hang_hoa);
-      System.out.println("nam san xuat: " + myObj.nam_sx);
-      */
+                // Mặc định giá bán = giá nhập, số lượng bán = số lượng nhập ban đầu
+                Ban ban = new Ban(id, ten, giaNhap, soLuong);
+                danhSachBan.add(ban);
 
-      // test
-      ArrayList<HangHoa> danhSachHangHoa = new ArrayList<>();
-      banManager manager = new banManager();
-      Scanner input = new Scanner(System.in);
-      
-      while (true) {
-         System.out.println("\n=== QUẢN LÝ BÁN HÀNG ===");
-         System.out.println("Nhập thông tin hàng hóa (hoặc 'exit' để thoát):");
-         System.out.println("===================================");
-         System.out.println("Cac lua chon:");
-         System.out.println("1. Nhập hàng hóa");
-         System.out.println("2. Bán hàng hóa");
-         System.out.println("3. Xem danh sách hàng hóa");
-         System.out.println("4. Tìm kiếm hàng hóa");
-         System.out.println("5. Tính doanh thu");
-         System.out.println("6. Thoát");
-         System.out.print("Chọn tùy chọn (1-5): ");
-         int choice = input.nextInt();
-         input.nextLine();
-         if (choice == 1)
-         {
-            System.out.print("Nhập ID hàng hóa: ");
-            String hanghoaID = input.nextLine();
-            System.out.print("Nhập tên hàng hóa: ");
-            String tenHangHoa = input.nextLine();
-            System.out.print("Nhập số lượng nhập: ");
-            int soLuongNhap = input.nextInt();
-            System.out.print("Nhập giá nhập: ");
-            double giaNhap = input.nextDouble();
-            input.nextLine(); // Clear the newline character
-            System.out.print("Nhập ngày nhập (dd/MM/yyyy): ");
-            String ngayNhap = input.nextLine();
-            System.out.print("Nhập loại hàng hóa: ");
-            String loaiHangHoa = input.nextLine();
+                System.out.println("Đã thêm hàng hóa và cập nhật danh sách bán.");
+            } 
+            else if (choice == 2) {
+                // Bán hàng hóa
+                if (danhSachBan.isEmpty()) {
+                     System.out.println();
+                    System.out.println("Chưa có hàng hóa để bán.");
+                    continue;
+                }
+                System.out.print("Nhập ID hàng hóa cần bán: ");
+                String idBan = input.nextLine();
 
-            // Tạo đối tượng Nhap và thêm vào danh sách
-            Nhap nhapHangHoa = new Nhap(hanghoaID, tenHangHoa, soLuongNhap, giaNhap, ngayNhap, loaiHangHoa);
-            danhSachHangHoa.add(nhapHangHoa);
+                boolean found = false;
+                for (Ban ban : danhSachBan) {
+                    if (ban.getHangHoaID().equals(idBan)) {
+                        found = true;
+                        System.out.print("Nhập số lượng cần bán: ");
+                        int soLuongBan = input.nextInt();
+                        input.nextLine();
 
-            // Thêm vào manager để quản lý bán hàng (giả sử giá bán = giá nhập)
-            Ban ban = new Ban(hanghoaID, tenHangHoa, giaNhap, soLuongNhap);
-            manager.themBan(ban);
-         }
-         else if (choice == 2)
-         {
-            // Bán hàng hóa
-         }
-         else if (choice == 3)
-         {
-            // Hiển thị danh sách hàng hóa
-            if (danhSachHangHoa.isEmpty()) {
-               System.out.println("Danh sách hàng hóa hiện tại trống!");
-            } else {
-               System.out.println("Danh sách hàng hóa:");
-               for (HangHoa hangHoa : danhSachHangHoa) {
-                  System.out.println("ID: " + hangHoa.getHanghoaID() +
-                                     ", Tên: " + hangHoa.getTenHangHoa() +
-                                     ", Số lượng: " + hangHoa.getSoLuongHangHoa() +
-                                     ", Ngày nhập: " + hangHoa.getNgayNhap() +
-                                     ", Giá nhập: " + hangHoa.getGiaNhap() +
-                                     ", Loại: " + hangHoa.getLoaiHangHoa());
-               }
+                        if (soLuongBan <= ban.getSoLuongBan()) {
+                            ban.setSoLuongBan(ban.getSoLuongBan() - soLuongBan);
+                            System.out.println("Bán thành công " + soLuongBan + " đơn vị hàng hóa.");
+                        } else {
+                            System.out.println("Số lượng bán vượt quá tồn kho!");
+                        }
+                        break;
+                    }
+                }
+                if (!found) {
+                    System.out.println("Không tìm thấy hàng hóa với ID " + idBan);
+                }
+            } 
+            else if (choice == 3) {
+                // Hiển thị danh sách hàng hóa
+                if (danhSachHangHoa.isEmpty()) {
+                    System.out.println("Danh sách hàng hóa hiện tại trống!");
+                } else {
+                    System.out.println("Danh sách hàng hóa:");
+                    for (HangHoa hh : danhSachHangHoa) {
+                        System.out.println("- ID: " + hh.getHanghoaID() + ", Tên: " + hh.getTenHangHoa() +
+                                           ", Số lượng: " + hh.getSoLuongHangHoa() +
+                                           ", Giá nhập: " + hh.getGiaNhap() +
+                                           ", Ngày nhập: " + hh.getNgayNhap() +
+                                           ", Loại: " + hh.getLoaiHangHoa());
+                    }
+                }
+            } 
+            else if (choice == 4) {
+                // Tìm kiếm hàng hóa theo ID
+                System.out.print("Nhập ID hàng hóa cần tìm: ");
+                String idTim = input.nextLine();
+                boolean found = false;
+                for (HangHoa hh : danhSachHangHoa) {
+                    if (hh.getHanghoaID().equals(idTim)) {
+                        System.out.println("Tìm thấy hàng hóa:");
+                        System.out.println("- ID: " + hh.getHanghoaID() + ", Tên: " + hh.getTenHangHoa() +
+                                           ", Số lượng: " + hh.getSoLuongHangHoa() +
+                                           ", Giá nhập: " + hh.getGiaNhap() +
+                                           ", Ngày nhập: " + hh.getNgayNhap() +
+                                           ", Loại: " + hh.getLoaiHangHoa());
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    System.out.println("Không tìm thấy hàng hóa với ID " + idTim);
+                }
+            } 
+            else if (choice == 5) {
+                // Tính doanh thu
+                double tongTienBan = 0;
+                double tongTienNhap = 0;
+
+                for (Ban ban : danhSachBan) {
+                    int soLuongBan = ban.getSoLuongBan();
+                    double giaBan = ban.getGiaBan();
+                    // Doanh thu = (Số lượng ban đầu - Số lượng còn lại) * giá bán
+                    // Giả sử bạn cần lưu số lượng ban đầu trong Ban thì cần thêm biến lưu
+                }
+
+                for (HangHoa hh : danhSachHangHoa) {
+                    tongTienNhap += hh.getGiaNhap() * hh.getSoLuongHangHoa();
+                }
+
+                // Ở đây bạn cần tính đúng doanh thu thực tế, có thể cải tiến thêm
+                System.out.println("Tổng tiền nhập hàng: " + tongTienNhap);
+                // Hiện tại chưa tính được doanh thu chính xác nếu không lưu số lượng bán đã bán
+
+                System.out.println("Chức năng tính doanh thu đang được cải tiến.");
+            } 
+            else if (choice == 6) {
+                System.out.println("Thoát chương trình. Cảm ơn bạn đã sử dụng!");
+                break;
+            } 
+            else {
+                System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại.");
             }
-         }
-         else if (choice == 4)
-         {
-            if (manager.getDanhSachBan().isEmpty()) {
-               System.out.println();  // Dòng trắng để cách menu
-               System.out.println("Chưa có dữ liệu để tìm kiếm!");
-               System.out.println();  // Dòng trắng cách menu hoặc các câu lệnh tiếp theo
-               break;  // Thoát khỏi vòng lặp nếu không có dữ liệu
-            } else {
-               TimKiem timKiem = new TimKiem(manager.getDanhSachBan());
-               timKiem.timKiemBan(input);
-            }
-         }
-
-         else if (choice == 5)
-         {
-            // Tính doanh thu
-            double tongTienBan = 0;
-            double tongTienNhap = 0;
-            for (HangHoa hangHoa : danhSachHangHoa) {
-               if (hangHoa instanceof Ban) {
-                  tongTienBan += ((Ban) hangHoa).getGiaBan() * ((Ban) hangHoa).getSoLuongBan();
-               }
-               if (hangHoa instanceof Nhap) {
-                  tongTienNhap += hangHoa.getGiaNhap() * hangHoa.getSoLuongHangHoa();
-               }
-            }
-            DoanhThu dt = new DoanhThu();
-            dt.tinhDoanhThu(tongTienBan, tongTienNhap);
-            System.out.println("Đánh giá hiệu quả: " + dt.danhGiaHieuQua());
-         }
-         else if (choice == 6)
-         {
-            // Thoát chương trình
-            break;
-         }
-         else
-         {
-            System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại.");
-         }
-      }
-      System.out.println("Cảm ơn bạn đã sử dụng chương trình quản lý bán hàng!");
-      System.out.println("Kết thúc chương trình.");
-      input.close();
-   }
+        }
+        input.close();
+    }
 }
